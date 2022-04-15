@@ -41,3 +41,17 @@ Host acri
 
 ## ローカル環境で iverilog を使えるようにする
 
+1. `brew install icarus-verilog`   
+[homebrew-icarus-verilog](https://formulae.brew.sh/formula/icarus-verilog)
+
+2. `brew install --cask xquartz gtkwave`   
+GTKWaveのインストール
+
+### 参考資料
+
+[Qiita: iverilog MacOS](https://qiita.com/y-vectorfield/items/51b778ded1b2cad92f63)
+## Vivado, Vitis (SDK)　関連
+
+### 参考資料
+
+[ACRi: サーバで Vivado と Vitis (または SDK) を使用する](https://gw.acri.c.titech.ac.jp/wp/manual/vivado-vitis)
