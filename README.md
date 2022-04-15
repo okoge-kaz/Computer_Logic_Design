@@ -36,6 +36,8 @@ Host acri
 ### 参考資料
 
 - [Qiita: SSH公開鍵認証で接続するまで](https://qiita.com/kazokmr/items/754169cfa996b24fcbf5)
+- [Qitta:` ~/.ssh/config` ](https://qiita.com/passol78/items/2ad123e39efeb1a5286b)
+- [Qiita: OpenSSHと踏み台運用](https://qiita.com/aucfan-yotsuya/items/5a5f017dbc6ae778096a)
 - [ACRi](https://gw.acri.c.titech.ac.jp/wp/manual/how-to-reserve)
 - [ACRi MacOS](https://www.acri.c.titech.ac.jp/wordpress/archives/1730)
 
