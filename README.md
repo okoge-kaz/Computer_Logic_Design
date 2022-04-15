@@ -2,7 +2,7 @@
 
 Tokyo Institute of Technology 2022-1Q
 
-## acri 接続方法 & 環境構築
+## ACRi 接続方法 & 環境構築
 
 ### 環境構築
 1. `code ~/.ssh/config`でリモート接続時のコマンドを省略する
@@ -37,7 +37,7 @@ Host acri
 
 - [Qiita: SSH公開鍵認証で接続するまで](https://qiita.com/kazokmr/items/754169cfa996b24fcbf5)
 - [ACRi](https://gw.acri.c.titech.ac.jp/wp/manual/how-to-reserve)
-- [Acri MacOS](https://www.acri.c.titech.ac.jp/wordpress/archives/1730)
+- [ACRi MacOS](https://www.acri.c.titech.ac.jp/wordpress/archives/1730)
 
 ## ローカル環境で iverilog を使えるようにする
 
