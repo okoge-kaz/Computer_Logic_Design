@@ -12,7 +12,7 @@ module m_top ();
   end
   always@(*) #1 
     $write("%2d: %d %d -> %b %b\n", 
-           $time, r_a, r_b, w_c, w_s);
+          $time, r_a, r_b, w_c, w_s);
   m_HA m_HA0 (r_a, r_b, w_c, w_s);
 endmodule
 
