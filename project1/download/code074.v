@@ -23,6 +23,12 @@ endmodule
 
 module m_FA (w_a, w_b, w_cin, w_s, w_cout);
   /* Please describe here by yourself */
+  input wire w_a, w_b, w_cin;
+  output wire w_s, w_cout;
+
+  assign w_s = (w_a ^ w_b) ^ w_cin;
+  wire w_e = w_a ^ w_b;
+  assign w_cout = (w_a & w_b) | (w_e & w_cin);
 endmodule
 
 module m_HA (w_a, w_b, w_s, w_c);
