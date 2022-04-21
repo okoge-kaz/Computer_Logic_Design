@@ -61,3 +61,10 @@ GTKWaveのインストール
 ## Verilog-HDL の文法
 
 [Verilog-HDL](./docs/verilog-hdl.md)
+
+## Remote DeskTop上で日本語キーボードが正しく入力できない問題
+
+1. `gnome-session-properties`
+2. `Add` -> `setxkbmap jp` -> `Save`
+
+[参考](https://qiita.com/vochicong/items/6452ac54bde56b0e0bb3)
