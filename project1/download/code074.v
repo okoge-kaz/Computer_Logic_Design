@@ -27,9 +27,9 @@ module m_FA (w_a, w_b, w_cin, w_s, w_cout);
   output wire w_s, w_cout;
 
   wire w_e, w_f, w_g;
-  m_HA m_HA0(w_a, w_b, w_e, w_f);
-  m_HA m_HA1(w_cin, w_e, w_s, w_g);
-
+  m_HA m_HA0(w_cin, w_e, w_s, w_g);
+  m_HA m_HA1(w_a, w_b, w_e, w_f);
+  // w_eが確定する前にしてしまっていいの?
   assign w_cout = w_g | w_f;
 endmodule
 
