@@ -27,13 +27,13 @@ module m_ADDER (w_a, w_b, w_s);
 endmodule
 
 module m_FA (w_a, w_b, w_cin, w_s, w_cout);
-   input wire w_a, w_b, w_cin;
-   output wire w_s, w_cout;
+  input wire w_a, w_b, w_cin;
+  output wire w_s, w_cout;
 
-   wire w_e, w_f, w_g;
-   m_HA m_HA0(w_cin, w_e, w_s, w_g);
-   m_HA m_HA1(w_a, w_b, w_e, w_f);
-   assign w_cout = w_g | w_f;
+  wire w_e, w_f, w_g;
+  m_HA m_HA0(w_cin, w_e, w_s, w_g);
+  m_HA m_HA1(w_a, w_b, w_e, w_f);
+  assign w_cout = w_g | w_f;
 endmodule
 
 module m_HA (w_a, w_b, w_s, w_c);
