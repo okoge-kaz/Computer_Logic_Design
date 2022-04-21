@@ -57,3 +57,7 @@ GTKWaveのインストール
 ### 参考資料
 
 [ACRi: サーバで Vivado と Vitis (または SDK) を使用する](https://gw.acri.c.titech.ac.jp/wp/manual/vivado-vitis)
+
+## Verilog-HDL の文法
+
+[Verilog-HDL](./docs/verilog-hdl.md)
