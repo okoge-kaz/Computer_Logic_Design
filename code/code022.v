@@ -21,6 +21,7 @@ module m_decode (w_ir, w_op, w_rs, w_rt, w_imm);
   output wire [4:0]  w_rs;
   output wire [4:0]  w_rt;
   output wire [15:0] w_imm;
+  // bit列からの切り出し
   assign w_op  = w_ir[31:26];
   assign w_rs  = w_ir[25:21];
   assign w_rt  = w_ir[20:16];
