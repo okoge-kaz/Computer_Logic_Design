@@ -7,6 +7,7 @@
 module m_main (w_clk, w_a, w_b, w_dout);
   input  wire w_clk, w_a, w_b;
   output wire w_dout;
+  // この記述は、ただしくこの回路の速度を把握するための処理
   reg [`D_N-1:0] r_a=0, r_b=0, r_s=0;
   wire [`D_N-1:0] w_s;
   assign w_dout = ^r_s;
