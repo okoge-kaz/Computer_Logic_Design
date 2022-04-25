@@ -1,0 +1,297 @@
+$date
+	Wed May  5 16:02:21 2021
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	100ps
+$end
+$scope module m_top $end
+$var wire 32 ! w_led [31:0] $end
+$var reg 1 " r_clk $end
+$scope module p $end
+$var wire 1 " w_clk $end
+$var wire 32 # w_led [31:0] $end
+$var wire 5 $ w_rt [4:0] $end
+$var wire 32 % w_rslt2 [31:0] $end
+$var wire 32 & w_rslt [31:0] $end
+$var wire 5 ' w_rs [4:0] $end
+$var wire 32 ( w_rrt2 [31:0] $end
+$var wire 32 ) w_rrt [31:0] $end
+$var wire 32 * w_rrs [31:0] $end
+$var wire 5 + w_rd2 [4:0] $end
+$var wire 5 , w_rd [4:0] $end
+$var wire 6 - w_op [5:0] $end
+$var wire 32 . w_ldd [31:0] $end
+$var wire 32 / w_ir [31:0] $end
+$var wire 32 0 w_imm32 [31:0] $end
+$var wire 16 1 w_imm [15:0] $end
+$var reg 32 2 r_pc [31:0] $end
+$scope module m_dmem $end
+$var wire 12 3 w_addr [11:0] $end
+$var wire 1 " w_clk $end
+$var wire 32 4 w_din [31:0] $end
+$var wire 32 5 w_dout [31:0] $end
+$var wire 1 6 w_we $end
+$upscope $end
+$scope module m_imem $end
+$var wire 12 7 w_addr [11:0] $end
+$var wire 1 " w_clk $end
+$var wire 32 8 w_din [31:0] $end
+$var wire 32 9 w_dout [31:0] $end
+$var wire 1 : w_we $end
+$upscope $end
+$scope module m_regs $end
+$var wire 1 " w_clk $end
+$var wire 5 ; w_rr1 [4:0] $end
+$var wire 5 < w_rr2 [4:0] $end
+$var wire 32 = w_wdata [31:0] $end
+$var wire 1 > w_we $end
+$var wire 5 ? w_wr [4:0] $end
+$var wire 32 @ w_rdata2 [31:0] $end
+$var wire 32 A w_rdata1 [31:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+#0
+$dumpvars
+bx A
+bx @
+bx ?
+1>
+bx =
+bx <
+bx ;
+0:
+bx 9
+b0 8
+b0 7
+06
+bx 5
+b0 4
+bx 3
+b0 2
+bx 1
+bx 0
+bx /
+bx .
+bx -
+bx ,
+bx +
+bx *
+bx )
+bx (
+bx '
+bx &
+bx %
+bx $
+bx #
+0"
+bx !
+$end
+#200
+b0 (
+b0 )
+b0 @
+b0 *
+b0 A
+b0 +
+b0 ?
+b100000 0
+b100000 1
+b0 ,
+b0 $
+b0 <
+b0 '
+b0 ;
+b0 -
+b100000 /
+b100000 9
+#300
+b0 3
+b0 !
+b0 #
+b0 %
+b0 =
+b0 &
+#500
+b1000100010 .
+b1000100010 5
+1"
+#530
+b1 7
+b100 2
+#730
+b1000100010 !
+b1000100010 #
+b1000100010 %
+b1000100010 =
+bx )
+bx @
+b100 +
+b100 ?
+b100 (
+b100 0
+b100 1
+b100 $
+b100 <
+b100011 -
+b10001100000001000000000000000100 /
+b10001100000001000000000000000100 9
+#830
+b1 3
+b100 &
+#1000
+0"
+#1030
+b1100110011 !
+b1100110011 #
+b1100110011 %
+b1100110011 =
+b1100110011 .
+b1100110011 5
+#1500
+b1100110011 )
+b1100110011 @
+1"
+#1530
+b10 7
+b1000 2
+#1730
+b100 !
+b100 #
+b100 %
+b100 =
+b10 )
+b10 @
+b1 *
+b1 A
+b101 +
+b101 ?
+b10 (
+b10100000100000 0
+b10100000100000 1
+b101 ,
+b10 $
+b10 <
+b1 '
+b1 ;
+b0 -
+b1000100010100000100000 /
+b1000100010100000100000 9
+#1830
+b0 3
+b11 !
+b11 #
+b11 %
+b11 =
+b11 &
+#2000
+0"
+#2030
+b1000100010 .
+b1000100010 5
+#2500
+1"
+#2530
+b11 7
+b1100 2
+#2730
+b11 (
+b110 +
+b110 ?
+b11 )
+b11 @
+b1100110011 *
+b1100110011 A
+b11000000100000 0
+b11000000100000 1
+b110 ,
+b101 $
+b101 <
+b100 '
+b100 ;
+b100001010011000000100000 /
+b100001010011000000100000 9
+#2830
+b11001101 3
+b1100110110 !
+b1100110110 #
+b1100110110 %
+b1100110110 =
+b1100110110 &
+#3000
+0"
+#3030
+bx .
+bx 5
+#3500
+1"
+#3530
+b100 7
+b10000 2
+#3730
+bx )
+bx @
+b1100110110 *
+b1100110110 A
+b1000 +
+b1000 ?
+b101 (
+b101 0
+b101 1
+b0 ,
+b1000 $
+b1000 <
+b110 '
+b110 ;
+b1000 -
+b100000110010000000000000000101 /
+b100000110010000000000000000101 9
+#3830
+b11001110 3
+b1100111011 !
+b1100111011 #
+b1100111011 %
+b1100111011 =
+b1100111011 &
+#4000
+0"
+#4500
+b1100111011 )
+b1100111011 @
+1"
+#4530
+b101 7
+b10100 2
+#4730
+bx !
+bx #
+bx %
+bx =
+bx )
+bx @
+bx *
+bx A
+bx +
+bx ?
+bx (
+bx 0
+bx 1
+bx ,
+bx $
+bx <
+bx '
+bx ;
+bx -
+bx /
+bx 9
+#4830
+bx 3
+bx &
+#5000
+0"
+#5500
+1"
