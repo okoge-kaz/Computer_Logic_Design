@@ -30,6 +30,7 @@ module m_7segled (w_in, r_led);
       4'd7   : r_led <= 7'b1110000;
       4'd8   : r_led <= 7'b1111111;
       4'd9   : r_led <= 7'b1111011;
+      // default caseがない場合は、前の値を維持するため、 組み合わせ回路ではなく順序回路
     endcase
   end
 endmodule
