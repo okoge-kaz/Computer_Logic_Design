@@ -18,6 +18,7 @@ module m_main (w_clk, w_cnt);
   output wire [1:0] w_cnt;
 
   reg [1:0] r_cnt = 0;
+  // posedge: positive edge 立ち上がり
   always@(posedge w_clk) begin
       r_cnt <= #5 r_cnt + 1;
   end
