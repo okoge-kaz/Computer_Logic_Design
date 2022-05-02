@@ -7,7 +7,7 @@
 module m_main (w_clk, w_a, w_b, w_dout);
   input  wire w_clk, w_a, w_b;
   output wire w_dout;
-  reg [`D_N-1:0] r_a=0, r_b=0, r_s=0;
+  reg [`D_N-1:0] r_a=45, r_b=34, r_s=0;
   wire [`D_N-1:0] w_s;
   assign w_dout = ^r_s;
   always@(posedge w_clk) begin
@@ -16,6 +16,9 @@ module m_main (w_clk, w_a, w_b, w_dout);
     r_s <= w_s;
   end
   m_ADDER m_ADDER0 (r_a, r_b, w_s);
+  initial begin
+    #100 $display("%d + %d = %d", r_a, r_b, w_s);
+  end
 endmodule
 
 module m_ADDER (w_a, w_b, w_s);
