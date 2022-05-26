@@ -95,7 +95,16 @@ module m_proc08 (w_clk, r_led);
    reg r_state = 0;
    always @(posedge w_clk) r_state <= r_state + 1;
 
-   /***** first cycle *****/   
+   /***** first cycle IF *****/   
+
+   /***** second cycle ID *****/  
+
+   /***** third cycle EX *****/  
+
+   /***** forth cycle MEM *****/  
+
+   /***** fifth cycle WB *****/  
+
    wire [31:0] w_pc4 = r_pc + 4;
    wire [31:0] w_imm32 = {{16{w_imm[15]}}, w_imm};
    wire [31:0] w_tpc = w_pc4 + {w_imm32[29:0], 2'h0};
