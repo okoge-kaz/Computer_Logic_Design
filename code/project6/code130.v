@@ -95,53 +95,57 @@ module m_proc08 (w_clk, r_led);
    reg r_state = 0;
    always @(posedge w_clk) r_state <= r_state + 1;
 
-   /***** first cycle IF *****/   
-
-   /***** second cycle ID *****/  
-
-   /***** third cycle EX *****/  
-
-   /***** forth cycle MEM *****/  
-
-   /***** fifth cycle WB *****/  
-
+   /***** first cycle IF *****/
    wire [31:0] w_pc4 = r_pc + 4;
-   wire [31:0] w_imm32 = {{16{w_imm[15]}}, w_imm};
-   wire [31:0] w_tpc = w_pc4 + {w_imm32[29:0], 2'h0};
-   wire w_taken = (w_insn_beq && w_rrs==w_rrt2) || (w_insn_bne && w_rrs!=w_rrt2);
-   always @(posedge w_clk) if(r_state==1) begin
-      r_pc <= #3 (w_taken) ? r_tpc : w_pc4;
+   m_amemory m_imem (w_clk, r_pc[12:2], 1'd0, 32'd0, w_ir);
+   wire w_we = w_insn_add | w_insn_addi | w_insn_sllv | w_insn_srlv | w_insn_lw;
+   always @(posedge w_clk) if(r_state==4) begin
+      r_pc <= #3 (r_taken) ? r_tpc : w_pc4;
       r_led <= (r_we && w_rd2==30 && r_state==1) ? w_rslt2 : r_led;
    end
-   
-   m_amemory m_imem (w_clk, r_pc[12:2], 1'd0, 32'd0, w_ir);
-
+   /***** second cycle ID *****/  
+   wire [31:0] w_imm32 = {{16{w_imm[15]}}, w_imm};
+   wire [31:0] w_tpc = w_pc4 + {w_imm32[29:0], 2'h0};
    wire  [4:0] w_rd2 = (w_insn_add | w_insn_sllv | w_insn_srlv) ? w_rd : w_rt;
-   wire w_we = w_insn_add | w_insn_addi | w_insn_sllv | w_insn_srlv | w_insn_lw;
 
    reg r_we = 0;
    m_regfile m_regs (w_clk, w_rs, w_rt, w_rd2, r_we, w_rslt2, w_rrs, w_rrt);
 
+   reg [31:0] r_tpc = 0, r_rrs = 0, r_rrt = 0, r_rrt2 = 0, r_pc4 = 0;
+   always @(posedge w_clk) if(r_state==0) begin
+      r_pc4 <= w_pc4;
+   end
+   /***** third cycle EX *****/  
+   wire w_taken = (w_insn_beq && w_rrs==w_rrt2) || (w_insn_bne && w_rrs!=w_rrt2);
    assign w_rrt2 = (w_insn_addi | w_insn_lw | w_insn_sw) ? w_imm32 : w_rrt;
+
+   always @(posedge w_clk) if(r_state==1) begin
+      r_tpc <= w_tpc;
+      r_rrs <= w_rrs;
+      r_rrt <= w_rrt;
+      r_rrt2 <= w_rrt2;
+   end
+   /***** forth cycle MEM *****/  
+   reg r_taken=0, r_insn_lw=0, r_insn_sw=0;
+   reg [31:0] r_rslt=0;
 
    assign #10 w_rslt = (w_insn_sllv) ? w_rrs << w_rrt2[4:0] :
 	(w_insn_srlv) ? w_rrs >> w_rrt2[4:0] : w_rrs + w_rrt2;
-      
-   /***** second cycle *****/
-   reg [31:0] r_rslt=0, r_rrt=0, r_tpc=0;
-   reg r_taken=0, r_insn_lw=0, r_insn_sw=0;
-
-   always @(posedge w_clk) if(r_state==0) begin
-      r_tpc   <= w_tpc;
-      r_taken <= w_taken;
-      r_we    <= w_we;
-      r_rslt  <= w_rslt;
-      r_rrt   <= w_rrt;
-      r_insn_lw <= w_insn_lw;
-      r_insn_sw <= w_insn_sw;
-   end
 
    m_amemory m_dmem (w_clk, r_rslt[12:2], r_insn_sw, r_rrt, w_ldd);
 
+   always @(posedge w_clk) if(r_state==2) begin
+      r_taken <= w_taken;
+      r_rslt <= w_rslt;
+      r_insn_lw <= w_insn_lw;
+      r_insn_sw <= w_insn_sw;
+   end
+   /***** fifth cycle WB *****/  
    assign w_rslt2 = (r_insn_lw) ? w_ldd : r_rslt;
+
+   always @(posedge w_clk) if(r_state==3) begin
+      r_we <= w_we;
+   end
+   // どこにおくべきか不明
+   // wire w_we = w_insn_add | w_insn_addi | w_insn_sllv | w_insn_srlv | w_insn_lw;
 endmodule
