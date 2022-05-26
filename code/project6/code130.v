@@ -15,7 +15,7 @@ module m_top ();
    m_proc08 p (r_clk, w_led);
    initial $write("time: s r_pc     w_ir     w_rrs    w_rrt2   r_rslt2  r_led\n");
    always@(posedge r_clk) $write("%4d: %d %x %x %x %x %x %x\n", $time,
-                         p.r_state, p.r_pc, p.w_ir, p.w_rrs, p.w_rrt2, p.w_rslt2, w_led);
+                        p.r_state, p.r_pc, p.w_ir, p.w_rrs, p.w_rrt2, p.w_rslt2, w_led);
    initial #2000 $finish;
 endmodule
 
@@ -24,7 +24,7 @@ endmodule
 module m_main (w_clk, w_led);
    input  wire w_clk;
    output wire [3:0] w_led;
- 
+
    wire w_clk2, w_locked;
    clk_wiz_0 clk_w0 (w_clk2, 0, w_locked, w_clk);
    
@@ -32,10 +32,10 @@ module m_main (w_clk, w_led);
    m_proc08 p (w_clk2, w_dout);
 
    vio_0 vio_00(w_clk2, w_dout);
- 
+
    reg [3:0] r_led = 0;
    always @(posedge w_clk2) 
-     r_led <= {^w_dout[31:24], ^w_dout[23:16], ^w_dout[15:8], ^w_dout[7:0]};
+      r_led <= {^w_dout[31:24], ^w_dout[23:16], ^w_dout[15:8], ^w_dout[7:0]};
    assign w_led = r_led;
 endmodule
 */
@@ -58,7 +58,7 @@ module m_regfile (w_clk, w_rr1, w_rr2, w_wr, w_we, w_wdata, w_rdata1, w_rdata2);
    input  wire [31:0] w_wdata;
    input  wire        w_we;
    output wire [31:0] w_rdata1, w_rdata2;
-    
+
    reg [31:0] r[0:31];
    assign w_rdata1 = (w_rr1==0) ? 0 : r[w_rr1];
    assign w_rdata2 = (w_rr2==0) ? 0 : r[w_rr2];
@@ -116,7 +116,7 @@ module m_proc08 (w_clk, r_led);
    assign w_rrt2 = (w_insn_addi | w_insn_lw | w_insn_sw) ? w_imm32 : w_rrt;
 
    assign #10 w_rslt = (w_insn_sllv) ? w_rrs << w_rrt2[4:0] :
-		       (w_insn_srlv) ? w_rrs >> w_rrt2[4:0] : w_rrs + w_rrt2;
+	(w_insn_srlv) ? w_rrs >> w_rrt2[4:0] : w_rrs + w_rrt2;
       
    /***** second cycle *****/
    reg [31:0] r_rslt=0, r_rrt=0, r_tpc=0;
