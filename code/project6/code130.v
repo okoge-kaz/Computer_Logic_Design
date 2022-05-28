@@ -40,14 +40,14 @@ module m_main (w_clk, w_led);
 endmodule
 */
 
-module m_amemory (w_clk, w_addr, w_we, w_din, w_dout);
+module m_amemory (w_clk, w_addr, w_we, w_din, r_dout);
    input  wire w_clk, w_we;
    input  wire [10:0] w_addr;
    input  wire [31:0] w_din;
-   output wire [31:0] w_dout;
+   output reg [31:0] r_dout;
    reg [31:0] 	      cm_ram [0:2047]; // 4K word (2048 x 32bit) memory
    always @(posedge w_clk) if (w_we) cm_ram[w_addr] <= w_din;
-   assign #20 w_dout = cm_ram[w_addr];
+   always @(posedge w_clk) r_dout <= cm_ram[w_addr];
 
 `include "program.txt"
 endmodule
@@ -111,9 +111,11 @@ module m_proc08 (w_clk, r_led);
    reg r_we = 0;
    m_regfile m_regs (w_clk, w_rs, w_rt, w_rd2, r_we, w_rslt2, w_rrs, w_rrt);
 
-   reg [31:0] r_tpc = 0, r_rrs = 0, r_rrt = 0, r_rrt2 = 0, r_pc4 = 0;
+   reg [31:0] r_tpc = 0, r_rrs = 0, r_rrt = 0, r_rrt2 = 0, r_pc4 = 0, r_ir = 0;
    always @(posedge w_clk) if(r_state==0) begin
       r_pc4 <= w_pc4;
+      r_ir <= w_ir;
+      r_we <= w_we;
    end
    /***** third cycle EX *****/  
    wire w_taken = (w_insn_beq && w_rrs==w_rrt2) || (w_insn_bne && w_rrs!=w_rrt2);
@@ -142,9 +144,10 @@ module m_proc08 (w_clk, r_led);
    end
    /***** fifth cycle WB *****/  
    assign w_rslt2 = (r_insn_lw) ? w_ldd : r_rslt;
+   reg [31:0] r_ldd = 0;
 
    always @(posedge w_clk) if(r_state==3) begin
-      r_we <= w_we;
+      r_ldd <= w_ldd;
    end
    // どこにおくべきか不明
    // wire w_we = w_insn_add | w_insn_addi | w_insn_sllv | w_insn_srlv | w_insn_lw;

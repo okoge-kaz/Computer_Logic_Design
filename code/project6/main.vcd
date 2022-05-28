@@ -1,5 +1,5 @@
 $date
-	Thu May 26 22:07:25 2022
+	Thu May 26 23:11:52 2022
 $end
 $version
 	Icarus Verilog
@@ -41,63 +41,67 @@ $var wire 16 < w_imm [15:0] $end
 $var wire 6 = w_funct [5:0] $end
 $var reg 1 > r_insn_lw $end
 $var reg 1 ? r_insn_sw $end
-$var reg 32 @ r_led [31:0] $end
-$var reg 32 A r_pc [31:0] $end
-$var reg 32 B r_pc4 [31:0] $end
-$var reg 32 C r_rrs [31:0] $end
-$var reg 32 D r_rrt [31:0] $end
-$var reg 32 E r_rrt2 [31:0] $end
-$var reg 32 F r_rslt [31:0] $end
-$var reg 1 G r_state $end
-$var reg 1 H r_taken $end
-$var reg 32 I r_tpc [31:0] $end
-$var reg 1 J r_we $end
+$var reg 32 @ r_ir [31:0] $end
+$var reg 32 A r_ldd [31:0] $end
+$var reg 32 B r_led [31:0] $end
+$var reg 32 C r_pc [31:0] $end
+$var reg 32 D r_pc4 [31:0] $end
+$var reg 32 E r_rrs [31:0] $end
+$var reg 32 F r_rrt [31:0] $end
+$var reg 32 G r_rrt2 [31:0] $end
+$var reg 32 H r_rslt [31:0] $end
+$var reg 1 I r_state $end
+$var reg 1 J r_taken $end
+$var reg 32 K r_tpc [31:0] $end
+$var reg 1 L r_we $end
 $scope module m_dmem $end
-$var wire 11 K w_addr [10:0] $end
+$var wire 11 M w_addr [10:0] $end
 $var wire 1 " w_clk $end
-$var wire 32 L w_din [31:0] $end
-$var wire 32 M w_dout [31:0] $end
+$var wire 32 N w_din [31:0] $end
 $var wire 1 ? w_we $end
+$var reg 32 O r_dout [31:0] $end
 $upscope $end
 $scope module m_imem $end
-$var wire 11 N w_addr [10:0] $end
+$var wire 11 P w_addr [10:0] $end
 $var wire 1 " w_clk $end
-$var wire 32 O w_din [31:0] $end
-$var wire 32 P w_dout [31:0] $end
-$var wire 1 Q w_we $end
+$var wire 32 Q w_din [31:0] $end
+$var wire 1 R w_we $end
+$var reg 32 S r_dout [31:0] $end
 $upscope $end
 $scope module m_regs $end
 $var wire 1 " w_clk $end
-$var wire 5 R w_rr1 [4:0] $end
-$var wire 5 S w_rr2 [4:0] $end
-$var wire 32 T w_wdata [31:0] $end
-$var wire 1 J w_we $end
-$var wire 5 U w_wr [4:0] $end
-$var wire 32 V w_rdata2 [31:0] $end
-$var wire 32 W w_rdata1 [31:0] $end
+$var wire 5 T w_rr1 [4:0] $end
+$var wire 5 U w_rr2 [4:0] $end
+$var wire 32 V w_wdata [31:0] $end
+$var wire 1 L w_we $end
+$var wire 5 W w_wr [4:0] $end
+$var wire 32 X w_rdata2 [31:0] $end
+$var wire 32 Y w_rdata1 [31:0] $end
 $upscope $end
 $upscope $end
 $upscope $end
 $enddefinitions $end
 #0
 $dumpvars
+bx Y
+bx X
 bx W
-bx V
+b0 V
 bx U
-b0 T
+bx T
 bx S
-bx R
-0Q
-bx P
-b0 O
+0R
+b0 Q
+b0 P
+bx O
 b0 N
-bx M
-b0 L
+b0 M
+0L
 b0 K
 0J
-b0 I
-0H
-0G
+0I
+b0 H
+b0 G
 b0 F
 b0 E
 b0 D
@@ -137,15 +141,15 @@ x#
 0"
 b0 !
 $end
-#200
+#500
 1'
 b1011100 (
 b10110 -
 0&
 b10000 0
-b10000 U
+b10000 W
 b0 /
-b0 W
+b0 Y
 0#
 0$
 0%
@@ -154,123 +158,130 @@ b10110 ;
 b10110 <
 b0 1
 b10000 )
-b10000 S
+b10000 U
 b0 ,
-b0 R
+b0 T
 1:
 07
 06
 09
 08
 b1000 3
-b100000000100000000000000010110 4
-b100000000100000000000000010110 M
 b100000000100000000000000010110 5
-b100000000100000000000000010110 P
-#300
-b10110 +
-#500
-1G
-b100 B
+b100000000100000000000000010110 S
+b100000000100000000000000010110 4
+b100000000100000000000000010110 O
+1I
+xL
+bx @
+b100 D
 1"
+#600
+b10110 +
 #1000
 0"
 #1500
-b10110 E
-bx D
-bx L
-b1011100 I
-0G
+b10110 G
+bx F
+bx N
+b1011100 K
+0I
 1"
 #2000
 0"
 #2500
-1G
+1I
+1L
+b100000000100000000000000010110 @
 1"
 #3000
 0"
 #3500
-0G
+b0 .
+b0 X
+0I
 1"
 #4000
 0"
 #4500
-1G
+1I
 1"
 #5000
 0"
 #5500
-0G
+b0 F
+b0 N
+0I
 1"
 #6000
 0"
 #6500
-1G
+1I
 1"
 #7000
 0"
 #7500
-0G
+0I
 1"
 #8000
 0"
 #8500
-1G
+1I
 1"
 #9000
 0"
 #9500
-0G
+0I
 1"
 #10000
 0"
 #10500
-1G
+1I
 1"
 #11000
 0"
 #11500
-0G
+0I
 1"
 #12000
 0"
 #12500
-1G
+1I
 1"
 #13000
 0"
 #13500
-0G
+0I
 1"
 #14000
 0"
 #14500
-1G
+1I
 1"
 #15000
 0"
 #15500
-0G
+0I
 1"
 #16000
 0"
 #16500
-1G
+1I
 1"
 #17000
 0"
 #17500
-0G
+0I
 1"
 #18000
 0"
 #18500
-1G
+1I
 1"
 #19000
 0"
 #19500
-0G
+0I
 1"
 #20000
 0"
