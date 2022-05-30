@@ -68,3 +68,10 @@ GTKWaveのインストール
 2. `Add` -> `setxkbmap jp` -> `Save`
 
 [参考](https://qiita.com/vochicong/items/6452ac54bde56b0e0bb3)
+
+## Icarus Verilog のコンパイルオプション
+
+`iverilog  -s m_top -W all code121.v`
+
+[参考](https://tanakatarou.tech/627/)
+[参考](https://www.k0b0srecord.com/entry/2018/01/17/092210)

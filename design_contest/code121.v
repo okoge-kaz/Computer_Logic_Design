@@ -9,22 +9,22 @@
 /**************************************************************************/
 
 /***** top module for verification *****/
-/*
+
 module m_top (); 
   reg r_clk=0; initial forever #50 r_clk = ~r_clk;
   wire [31:0] w_led;
 
-  m_proc07 p (r_clk, w_led);
+  m_proc11 p (r_clk, w_led);
 
   always@(posedge r_clk)
     if(p.w_we) $write("%08x\n", p.w_rslt2);
 
   always@(posedge r_clk) if(p.w_ir==`HALT) $finish();
 endmodule
-*/
+
 
 /***** top module for simulation *****/
-module m_top (); 
+module m_top_debug (); 
   reg r_clk=0; initial forever #50 r_clk = ~r_clk;
   wire [31:0] w_led;
 
@@ -53,7 +53,7 @@ endmodule
 
 
 /***** main module for FPGA implementation *****/
-/*
+
 module m_main (w_clk, w_led);
   input  wire w_clk;
   output wire [3:0] w_led;
@@ -71,7 +71,7 @@ module m_main (w_clk, w_led);
     r_led <= {^w_dout[31:24], ^w_dout[23:16], ^w_dout[15:8], ^w_dout[7:0]};
   assign w_led = r_led;
 endmodule
-*/
+
 
 module m_amemory (w_clk, w_addr, w_we, w_din, w_dout);
   input  wire w_clk, w_we;
@@ -171,7 +171,7 @@ module m_proc11 (w_clk, r_rout);
   reg [31:0] IdEx_rrs=0, IdEx_rrt=0, IdEx_rrt2=0; //
   reg [31:0] ExMe_rslt=0, ExMe_rrt=0; //
   reg [31:0] MeWb_rslt=0; //
-  reg [5:0] IdEx_op=0, ExMe_op=0, MeWb_op=0; //
+  reg [5:0] IdEx_op=0, ExMe_op=0, MeWb_op=0, IdEx_funct=0; //
   reg [31:0] IfId_pc=0, IdEx_pc=0, ExMe_pc=0, MeWb_pc=0; //
   reg [4:0] IfId_rd2=0, IdEx_rd2=0, ExMe_rd2=0, MeWb_rd2=0;//
   reg IfId_w=0, IdEx_w=0, ExMe_w=0, MeWb_w=0; //
@@ -182,7 +182,7 @@ module m_proc11 (w_clk, r_rout);
   wire [31:0] w_tpc;
   reg [31:0] r_pc = 0;
   wire [31:0] w_pc4 = r_pc + 4;
-  m_memory m_imem (w_clk, r_pc[13:2], 0, 0, IfId_ir);
+  m_memory m_imem (w_clk, r_pc[13:2], 1'b0, 32'b0, IfId_ir);
   always @(posedge w_clk) begin
   r_pc <= #3 (w_rst | r_halt) ? 0 : (w_taken) ? w_tpc : w_pc4;
   IfId_pc <= #3 r_pc;
@@ -190,29 +190,53 @@ module m_proc11 (w_clk, r_rout);
   end
 /**************************** ID stage ***********************************/
   wire [31:0] w_rrs, w_rrt, w_rslt2;
+
   wire [5:0] w_op = IfId_ir[31:26];
   wire [4:0] w_rs = IfId_ir[25:21];
   wire [4:0] w_rt = IfId_ir[20:16];
   wire [4:0] w_rd = IfId_ir[15:11];
   wire [4:0] w_rd2 = (w_op!=0) ? w_rt : w_rd;
+  // = wire  [4:0] w_rd2 = (w_insn_add | w_insn_sllv | w_insn_srlv) ? w_rd : w_rt;
   wire [15:0] w_imm = IfId_ir[15:0];
+  wire [5:0] w_funct = IfId_ir[5:0];
+  // ALUの計算の前処理
+  wire w_insn_add = (w_op==0 && w_funct==6'h20);
+  wire w_insn_sllv = (w_op==0 && w_funct==6'h4);
+  wire w_insn_srlv = (w_op==0 && w_funct==6'h6);
+  wire w_insn_addi = (w_op==6'h8);
+  wire w_insn_lw = (w_op==6'h23);
+  wire w_insn_sw = (w_op==6'h2b);
+  wire w_insn_beq = (w_op==6'h4);
+  wire w_insn_bne = (w_op==6'h5);
+  //
+  wire w_we = w_insn_add | w_insn_addi | w_insn_sllv | w_insn_srlv | w_insn_lw ;
   wire [31:0] w_imm32 = {{16{w_imm[15]}}, w_imm};
-  wire [31:0] w_rrt2 = (w_op>6'h5) ? w_imm32 : w_rrt;
+  wire [31:0] w_rrt2 = (w_insn_addi | w_insn_lw | w_insn_sw) ? w_imm32 : w_rrt;
+  //
   assign w_tpc = IfId_pc4 + {w_imm32[29:0], 2'h0};
   assign w_taken = (w_op==`BNE && w_rrs!=w_rrt);
+
   m_regfile m_regs (w_clk, w_rs, w_rt, MeWb_rd2, MeWb_w, w_rslt2, w_rrs, w_rrt);
+
   always @(posedge w_clk) begin
   IdEx_pc <= #3 IfId_pc;
   IdEx_op <= #3 w_op;
   IdEx_rd2 <= #3 w_rd2;
-  IdEx_w <= #3 (w_op==0 || (w_op>6'h5 && w_op<6'h28));
-  IdEx_we <= #3 (w_op>6'h27);
+  IdEx_w <= #3 (w_op==0 || (w_op>6'h5 && w_op<6'h28));// bne ,beq, sw ではない命令
+  IdEx_we <= #3 w_we;
   IdEx_rrs <= #3 w_rrs;
   IdEx_rrt <= #3 w_rrt;
   IdEx_rrt2 <= #3 w_rrt2;
+  IdEx_funct <= #3 w_funct;
+  IdEx_insn_sllv <= #3 w_insn_sllv;
+  IdEx_insn_srlv <= #3 w_insn_srlv;
   end
 /**************************** EX stage ***********************************/
-  wire [31:0] #10 w_rslt = IdEx_rrs + IdEx_rrt2; // ALU
+  // ALU
+  wire [31:0] #10 w_rslt = (IdEx_issn_sllv) ? IdEx_rrs << IdEx_rrt : 
+                          (IdEx_issn_srlv) ? IdEx_rrs >> IdEx_rrt : 
+                          IdEx_rslt2 + IdEx_rrs;// 左シフト, 右シフト, 加算
+  //
   always @(posedge w_clk) begin
   ExMe_pc <= #3 IdEx_pc;
   ExMe_op <= #3 IdEx_op;
@@ -233,6 +257,7 @@ module m_proc11 (w_clk, r_rout);
   end
 /**************************** WB stage ***********************************/
   assign w_rslt2 = (MeWb_op>6'h19 && MeWb_op<6'h28) ? MeWb_ldd : MeWb_rslt;
+  // = assign w_rslt2 = (w_insn_lw) ? w_ldd : w_rslt;
 /*************************************************************************/
   initial r_rout = 0;
   reg [31:0] r_tmp=0;
