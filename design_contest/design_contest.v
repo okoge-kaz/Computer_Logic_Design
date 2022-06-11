@@ -42,7 +42,7 @@ endmodule
 
 module m_main (w_clk, w_led);
   input  wire w_clk;
-  output wire [4:0] w_led;
+  output wire [3:0] w_led;
   
   wire w_halt=0;
   wire w_clk2, w_locked;
@@ -53,7 +53,7 @@ module m_main (w_clk, w_led);
 
   vio_0 vio_00(w_clk2, w_dout);
 
-  reg [4:0] r_led = 0;
+  reg [3:0] r_led = 0;
   always @(posedge w_clk2) 
     r_led <= {^w_dout[31:24], ^w_dout[23:16], ^w_dout[15:8], ^w_dout[7:0]};
   assign w_led = r_led;
